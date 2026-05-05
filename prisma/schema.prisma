@@ -54,3 +54,58 @@ enum InteractionType {
   EMAIL
   LINE
 }
+
+model Order {
+  id              String        @id @default(cuid())
+  merchantTradeNo String        @unique
+  planCode        String
+  amount          Int
+  currency        String        @default("TWD")
+  provider        OrderProvider
+  providerRef     String?
+  status          OrderStatus   @default(PENDING)
+  customerEmail   String?
+  rawCallback     Json?
+  paidAt          DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([status])
+  @@index([planCode])
+  @@index([createdAt])
+}
+
+model Subscription {
+  id                     String             @id @default(cuid())
+  customerEmail          String
+  planCode               String
+  provider               OrderProvider
+  providerSubscriptionId String?            @unique
+  status                 SubscriptionStatus @default(ACTIVE)
+  currentPeriodEnd       DateTime?
+  cancelAt               DateTime?
+  createdAt              DateTime           @default(now())
+  updatedAt              DateTime           @updatedAt
+
+  @@index([customerEmail])
+  @@index([status])
+}
+
+enum OrderProvider {
+  ECPAY
+  STRIPE
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  EXPIRED
+}

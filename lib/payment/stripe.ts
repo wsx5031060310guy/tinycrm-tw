@@ -14,9 +14,10 @@ export function getStripe(): Stripe | null {
 export async function createCheckoutSession(input: {
   amountTwd: number;
   itemName: string;
-  contractId?: string;
+  merchantTradeNo: string;
   successUrl: string;
   cancelUrl: string;
+  customerEmail?: string | null;
 }) {
   const stripe = getStripe();
   if (!stripe) {
@@ -35,7 +36,8 @@ export async function createCheckoutSession(input: {
         quantity: 1,
       },
     ],
-    metadata: input.contractId ? { contractId: input.contractId } : undefined,
+    metadata: { merchantTradeNo: input.merchantTradeNo },
+    customer_email: input.customerEmail ?? undefined,
     success_url: input.successUrl,
     cancel_url: input.cancelUrl,
   });

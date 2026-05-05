@@ -70,7 +70,7 @@ export function buildCheckoutParams(input: {
     MerchantTradeDate: merchantTradeDate,
     PaymentType: "aio",
     TotalAmount: String(input.amount),
-    TradeDesc: input.tradeDesc || "DocGen TW Contract",
+    TradeDesc: input.tradeDesc || "TinyCRM Subscription",
     ItemName: input.itemName,
     ReturnURL: input.returnUrl,
     ClientBackURL: input.clientBackUrl,
