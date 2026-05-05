@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Contact {
+  id          String        @id @default(cuid())
+  name        String
+  phone       String?
+  email       String?
+  lineId      String?
+  company     String?
+  tags        String[]
+  status      ContactStatus @default(LEAD)
+  notes       String?
+  source      String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  interactions Interaction[]
+
+  @@index([status])
+  @@index([name])
+}
+
+model Interaction {
+  id        String          @id @default(cuid())
+  contactId String
+  type      InteractionType
+  channel   String?
+  summary   String
+  occurredAt DateTime       @default(now())
+  contact   Contact         @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@index([contactId])
+  @@index([occurredAt])
+}
+
+enum ContactStatus {
+  LEAD
+  QUALIFIED
+  CUSTOMER
+  CHURNED
+}
+
+enum InteractionType {
+  CALL
+  MESSAGE
+  MEETING
+  NOTE
+  EMAIL
+  LINE
+}

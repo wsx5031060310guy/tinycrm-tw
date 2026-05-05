@@ -1,65 +1,101 @@
-import Image from "next/image";
+import Link from "next/link";
+import { seedContacts } from "@/lib/seed-data";
+import { STATUS_BADGE, STATUS_LABELS } from "@/lib/utils";
 
 export default function Home() {
+  const stats = {
+    total: seedContacts.length,
+    leads: seedContacts.filter((c) => c.status === "LEAD").length,
+    qualified: seedContacts.filter((c) => c.status === "QUALIFIED").length,
+    customers: seedContacts.filter((c) => c.status === "CUSTOMER").length,
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="mx-auto max-w-5xl p-4 sm:p-8 space-y-8">
+      <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">TinyCRM TW</h1>
+          <p className="text-sm text-zinc-500">小型 CRM．手機優先．LINE 備註．Excel 匯出</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <div className="flex gap-2">
+          <Link
+            href="/contacts/new"
+            className="rounded bg-zinc-900 px-3 py-2 text-sm font-medium text-white hover:bg-zinc-800"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            ＋ 新增聯絡人
+          </Link>
+          <Link
+            href="/api/contacts/export"
+            className="rounded border border-zinc-300 px-3 py-2 text-sm font-medium hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
           >
-            Documentation
-          </a>
+            匯出 Excel
+          </Link>
         </div>
-      </main>
+      </header>
+
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Stat label="全部" value={stats.total} />
+        <Stat label="潛在客戶" value={stats.leads} />
+        <Stat label="已洽談" value={stats.qualified} />
+        <Stat label="現有客戶" value={stats.customers} />
+      </section>
+
+      <section className="overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-800">
+        <table className="w-full text-sm">
+          <thead className="bg-zinc-50 text-left text-xs uppercase tracking-wide text-zinc-500 dark:bg-zinc-900">
+            <tr>
+              <th className="px-3 py-2">姓名</th>
+              <th className="px-3 py-2 hidden sm:table-cell">公司</th>
+              <th className="px-3 py-2">狀態</th>
+              <th className="px-3 py-2 hidden md:table-cell">標籤</th>
+              <th className="px-3 py-2">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            {seedContacts.map((c) => (
+              <tr key={c.id} className="border-t border-zinc-100 dark:border-zinc-800">
+                <td className="px-3 py-3">
+                  <div className="font-medium">{c.name}</div>
+                  <div className="text-xs text-zinc-500">{c.phone ?? c.email}</div>
+                </td>
+                <td className="px-3 py-3 hidden sm:table-cell text-zinc-600 dark:text-zinc-300">{c.company ?? "-"}</td>
+                <td className="px-3 py-3">
+                  <span className={`inline-flex rounded-full px-2 py-0.5 text-xs ${STATUS_BADGE[c.status]}`}>
+                    {STATUS_LABELS[c.status]}
+                  </span>
+                </td>
+                <td className="px-3 py-3 hidden md:table-cell">
+                  <div className="flex flex-wrap gap-1">
+                    {c.tags.map((t) => (
+                      <span key={t} className="rounded bg-zinc-100 px-1.5 py-0.5 text-xs text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </td>
+                <td className="px-3 py-3">
+                  <Link href={`/contacts/${c.id}`} className="text-xs text-blue-600 hover:underline">
+                    詳細
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <footer className="text-xs text-zinc-500">
+        Demo data shown above. 實際資料需設定 DATABASE_URL 並執行 `prisma db push`。
+      </footer>
+    </main>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="text-xs text-zinc-500">{label}</div>
+      <div className="mt-1 text-2xl font-semibold">{value}</div>
     </div>
   );
 }
