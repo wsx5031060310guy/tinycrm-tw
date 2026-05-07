@@ -9,10 +9,10 @@ export type NewebpayConfig = {
 
 export function getNewebpayConfig(): NewebpayConfig {
   return {
-    merchantId: process.env.NEWEBPAY_MERCHANT_ID || "",
-    hashKey: process.env.NEWEBPAY_HASH_KEY || "",
-    hashIv: process.env.NEWEBPAY_HASH_IV || "",
-    apiBase: process.env.NEWEBPAY_API_BASE || "https://ccore.newebpay.com",
+    merchantId: (process.env.NEWEBPAY_MERCHANT_ID || "").trim(),
+    hashKey: (process.env.NEWEBPAY_HASH_KEY || "").trim(),
+    hashIv: (process.env.NEWEBPAY_HASH_IV || "").trim(),
+    apiBase: (process.env.NEWEBPAY_API_BASE || "https://ccore.newebpay.com").trim(),
   };
 }
 
@@ -45,10 +45,11 @@ export function decodeTradeInfo(hex: string, hashKey: string, hashIv: string): R
   return Object.fromEntries(new URLSearchParams(stripped));
 }
 
-// SHA256 input MUST be HashKey={KEY}&TradeInfo={ENC}&HashIV={IV} (the "TradeInfo=" prefix is non-obvious)
+// SHA256 input format per MPG 1.1 spec: `HashKey={KEY}&{HEX}&HashIV={IV}`.
+// The encrypted hex is concatenated raw — no "TradeInfo=" prefix.
 export function computeTradeSha(tradeInfoHex: string, hashKey: string, hashIv: string): string {
   return createHash("sha256")
-    .update(`HashKey=${hashKey}&TradeInfo=${tradeInfoHex}&HashIV=${hashIv}`)
+    .update(`HashKey=${hashKey}&${tradeInfoHex}&HashIV=${hashIv}`)
     .digest("hex")
     .toUpperCase();
 }
