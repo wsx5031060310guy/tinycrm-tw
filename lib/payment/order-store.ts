@@ -5,7 +5,7 @@
 import crypto from "node:crypto";
 import type { Plan } from "./pricing";
 
-export type OrderProvider = "ECPAY" | "STRIPE";
+export type OrderProvider = "NEWEBPAY";
 export type OrderStatus = "PENDING" | "PAID" | "FAILED" | "REFUNDED";
 
 export interface StoredOrder {
@@ -31,7 +31,7 @@ const store: StoredOrder[] =
   globalForStore.__tinycrmOrders ?? (globalForStore.__tinycrmOrders = []);
 
 export function makeMerchantTradeNo(prefix = "TCRM"): string {
-  // ECPay limit: 20 chars, alphanumeric only.
+  // NewebPay limit: 30 chars; we keep 20 for backwards compatibility.
   const stamp = Date.now().toString(36).toUpperCase();
   const rand = crypto.randomBytes(3).toString("hex").toUpperCase();
   return `${prefix}${stamp}${rand}`.slice(0, 20);

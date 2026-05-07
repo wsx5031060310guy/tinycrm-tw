@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { buildCheckoutParams } from "@/lib/payment/ecpay";
+import { buildCheckoutPayload } from "@/lib/payment/newebpay";
 import { getPlan } from "@/lib/payment/pricing";
 import { createOrder, makeMerchantTradeNo } from "@/lib/payment/order-store";
 
@@ -18,20 +18,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "invalid plan" }, { status: 400 });
   }
 
-  const merchantTradeNo = makeMerchantTradeNo("TCRM");
+  const merchantOrderNo = makeMerchantTradeNo("TCRM");
   const customerEmail = typeof body.email === "string" ? body.email : null;
-  createOrder({ merchantTradeNo, plan, provider: "ECPAY", customerEmail });
+  createOrder({ merchantTradeNo: merchantOrderNo, plan, provider: "NEWEBPAY", customerEmail });
 
   const base = siteUrl(req);
-  const { endpoint, params } = buildCheckoutParams({
-    merchantTradeNo,
+  const { endpoint, params } = buildCheckoutPayload({
+    merchantOrderNo,
     amount: plan.amount,
-    itemName: plan.name,
-    tradeDesc: plan.description,
-    returnUrl: `${base}/api/payment/ecpay/callback`,
-    clientBackUrl: `${base}/payment/success?order=${merchantTradeNo}`,
-    orderResultUrl: `${base}/payment/success?order=${merchantTradeNo}`,
+    itemDesc: plan.name,
+    email: customerEmail || "buyer@tinycrm.tw",
+    returnUrl: `${base}/api/payment/newebpay/return`,
+    notifyUrl: `${base}/api/payment/newebpay/notify`,
+    clientBackUrl: `${base}/payment/success?order=${merchantOrderNo}`,
   });
 
-  return NextResponse.json({ endpoint, params, merchantTradeNo });
+  return NextResponse.json({ endpoint, params, merchantOrderNo });
 }
