@@ -93,8 +93,7 @@ model Subscription {
 }
 
 enum OrderProvider {
-  ECPAY
-  STRIPE
+  NEWEBPAY
 }
 
 enum OrderStatus {
