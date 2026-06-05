@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 export default function NewContactPage() {
   const [name, setName] = useState("");
@@ -48,8 +48,9 @@ export default function NewContactPage() {
         <Input label="標籤（用逗號分隔）" value={tags} onChange={setTags} />
 
         <div className="space-y-1">
-          <label className="block text-sm font-medium">狀態</label>
+          <label htmlFor="contact-status" className="block text-sm font-medium">狀態</label>
           <select
+            id="contact-status"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
             className="w-full rounded border border-zinc-300 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900"
@@ -62,8 +63,9 @@ export default function NewContactPage() {
         </div>
 
         <div className="space-y-1">
-          <label className="block text-sm font-medium">備註</label>
+          <label htmlFor="contact-notes" className="block text-sm font-medium">備註</label>
           <textarea
+            id="contact-notes"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             className="w-full rounded border border-zinc-300 bg-white px-3 py-2 text-sm min-h-24 dark:border-zinc-700 dark:bg-zinc-900"
@@ -95,13 +97,15 @@ function Input({
   onChange: (v: string) => void;
   required?: boolean;
 }) {
+  const id = useId();
   return (
     <div className="space-y-1">
-      <label className="block text-sm font-medium">
+      <label htmlFor={id} className="block text-sm font-medium">
         {label}
         {required && <span className="ml-1 text-red-500">*</span>}
       </label>
       <input
+        id={id}
         type="text"
         required={required}
         value={value}
