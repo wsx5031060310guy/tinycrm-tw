@@ -17,7 +17,7 @@ export default function RefundPage() {
         <Section title="一、適用範圍">
           <p>
             本政策適用於您透過本網站訂閱「TinyCRM TW」付費方案（售價詳見
-            <Link href="/pricing" className="text-blue-600 hover:underline">方案與定價</Link>）之退款事宜，
+            <Link href="/pricing" className="text-blue-600 underline">方案與定價</Link>）之退款事宜，
             由 {COMPANY.legalName} 提供服務。
           </p>
         </Section>

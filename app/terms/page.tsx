@@ -40,7 +40,7 @@ export default function TermsPage() {
           <p>
             本服務為雲端客戶關係管理（CRM）軟體服務，功能包含聯絡人管理、互動紀錄、Excel 匯出與 AI
             筆記摘要等，實際功能以各方案說明為準（詳見
-            <Link href="/pricing" className="text-blue-600 hover:underline">方案與定價</Link>）。
+            <Link href="/pricing" className="text-blue-600 underline">方案與定價</Link>）。
             本公司得視營運需要新增、調整或停止部分功能；如有重大變更或服務終止，將於合理期間前公告或通知。
           </p>
         </Section>
@@ -48,7 +48,7 @@ export default function TermsPage() {
         <Section title="四、付款與金流">
           <p>
             本服務採訂閱制，售價依
-            <Link href="/pricing" className="text-blue-600 hover:underline">方案與定價</Link>
+            <Link href="/pricing" className="text-blue-600 underline">方案與定價</Link>
             頁面之公告為準，以新臺幣計價。線上付款透過第三方金流服務「藍新金流 NewebPay」處理（信用卡），
             本公司不會儲存您的完整卡號。價格如有調整，將於生效前公告，調整後之價格自次一計費週期起適用。
           </p>
@@ -57,7 +57,7 @@ export default function TermsPage() {
         <Section title="五、退款政策">
           <p>
             退款相關規定（含七日猶豫期之適用與例外）詳見
-            <Link href="/refund" className="text-blue-600 hover:underline">退款政策</Link>，
+            <Link href="/refund" className="text-blue-600 underline">退款政策</Link>，
             該政策為本條款之一部分。
           </p>
         </Section>
@@ -85,7 +85,7 @@ export default function TermsPage() {
         <Section title="八、個人資料保護">
           <p>
             本公司如何蒐集、處理及利用您的個人資料，詳見
-            <Link href="/privacy" className="text-blue-600 hover:underline">隱私權政策</Link>。
+            <Link href="/privacy" className="text-blue-600 underline">隱私權政策</Link>。
           </p>
         </Section>
 

@@ -64,9 +64,9 @@ export default function PricingPage() {
         </p>
         <p className="text-xs text-zinc-500">
           訂閱前請詳閱
-          <Link href="/terms" className="text-blue-600 hover:underline">服務條款</Link>、
-          <Link href="/refund" className="text-blue-600 hover:underline">退款政策</Link>與
-          <Link href="/privacy" className="text-blue-600 hover:underline">隱私權政策</Link>。
+          <Link href="/terms" className="text-blue-600 underline">服務條款</Link>、
+          <Link href="/refund" className="text-blue-600 underline">退款政策</Link>與
+          <Link href="/privacy" className="text-blue-600 underline">隱私權政策</Link>。
         </p>
       </section>
     </main>
