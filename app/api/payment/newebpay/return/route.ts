@@ -19,8 +19,10 @@ export async function POST(req: NextRequest) {
     } catch {}
   }
   const base = process.env.NEXT_PUBLIC_SITE_URL || req.nextUrl.origin;
-  const url = merchantOrderNo
-    ? `${base}/payment/success?order=${merchantOrderNo}`
-    : `${base}/payment/success`;
+  const status = form?.get("Status");
+  const qs = new URLSearchParams();
+  if (merchantOrderNo) qs.set("order", merchantOrderNo);
+  if (status) qs.set("status", String(status));
+  const url = `${base}/payment/success${qs.size > 0 ? `?${qs}` : ""}`;
   return NextResponse.redirect(url, { status: 303 });
 }
