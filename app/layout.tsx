@@ -43,7 +43,11 @@ export default function RootLayout({
               © {new Date().getFullYear()} {COMPANY.name}｜統一編號：{COMPANY.taxId}｜{COMPANY.address}
             </p>
             <p>
-              電話：{COMPANY.phone}｜Email：{COMPANY.email}｜LINE：{COMPANY.lineId}
+              電話：{COMPANY.phone}｜Email：
+              <a href={`mailto:${COMPANY.email}`} className="hover:underline">
+                {COMPANY.email}
+              </a>
+              ｜LINE：{COMPANY.lineId}
             </p>
           </div>
         </footer>
