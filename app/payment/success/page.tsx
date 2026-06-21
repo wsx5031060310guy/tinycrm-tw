@@ -99,7 +99,6 @@ export default async function PaymentSuccessPage({
                 </a>
               )}
             </li>
-            <li>電話：{COMPANY.phone}</li>
             <li>LINE 官方帳號：{COMPANY.lineId}</li>
           </ul>
           <p className="mt-2 text-xs text-zinc-500">

@@ -53,7 +53,7 @@ export default function RefundPage() {
 
         <Section title="五、退款申請方式與處理時程">
           <ul className="list-disc space-y-1 pl-5">
-            <li>申請管道：來信 {COMPANY.email}，或致電 {COMPANY.phone}（亦可透過 LINE 官方帳號：{COMPANY.lineId}）。</li>
+            <li>申請管道：來信 {COMPANY.email}（亦可透過 LINE 官方帳號：{COMPANY.lineId}）。</li>
             <li>請提供訂單編號、付款日期與申請事由，以利核對。</li>
             <li>本公司將於收到申請後 7 個工作天內回覆審核結果。</li>
             <li>

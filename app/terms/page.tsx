@@ -21,7 +21,6 @@ export default function TermsPage() {
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>統一編號：{COMPANY.taxId}</li>
             <li>地址：{COMPANY.address}</li>
-            <li>電話：{COMPANY.phone}</li>
             <li>Email：{COMPANY.email}</li>
           </ul>
           <p className="mt-2">
@@ -115,7 +114,6 @@ export default function TermsPage() {
         <Section title="十二、聯絡方式">
           <ul className="list-disc space-y-1 pl-5">
             <li>Email：{COMPANY.email}</li>
-            <li>電話：{COMPANY.phone}</li>
             <li>LINE 官方帳號：{COMPANY.lineId}</li>
           </ul>
         </Section>
