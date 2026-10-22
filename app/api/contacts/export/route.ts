@@ -1,4 +1,4 @@
-import * as XLSX from "xlsx";
+import ExcelJS from "exceljs";
 import { seedContacts } from "@/lib/seed-data";
 import { STATUS_LABELS } from "@/lib/utils";
 
@@ -16,10 +16,11 @@ export async function GET() {
     建立時間: c.createdAt,
   }));
 
-  const ws = XLSX.utils.json_to_sheet(rows);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Contacts");
-  const buf = XLSX.write(wb, { type: "buffer", bookType: "xlsx" }) as Buffer;
+  const wb = new ExcelJS.Workbook();
+  const ws = wb.addWorksheet("Contacts");
+  ws.columns = Object.keys(rows[0] ?? {}).map((key) => ({ header: key, key }));
+  ws.addRows(rows);
+  const buf = await wb.xlsx.writeBuffer();
 
   return new Response(new Uint8Array(buf), {
     headers: {
