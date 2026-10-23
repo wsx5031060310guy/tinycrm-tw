@@ -108,6 +108,6 @@ npm run dev
 - `POST /api/contacts` 與新增互動為 demo / 記憶體模式，尚未寫入資料庫。
 - 訂單 / 訂閱以 in-memory store 暫存，未接 Prisma。
 - `Subscription` 模型已定義，但目前程式碼**未有任何讀寫**該表的邏輯。
-- `lib/company.ts` 的 `taxId` 與 `lineId` 為待補佔位字串（「（統編待補）」/「（LINE 官方帳號待補）」）。
+- `lib/company.ts` 的 `lineId` 為待補佔位字串（「（LINE 官方帳號待補）」）；`taxId` 已填入 62171540。
 - `/payment/success` 的「開始使用」按鈕連向 `/contacts`，但該路由不存在（列表在首頁 `/`）。
 - 無使用者驗證 / 登入機制；所有頁面與 API 皆公開。
