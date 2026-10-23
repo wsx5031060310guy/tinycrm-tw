@@ -18,7 +18,7 @@ export default function RefundPage() {
           <p>
             本政策適用於您透過本網站訂閱「TinyCRM TW」付費方案（售價詳見
             <Link href="/pricing" className="text-blue-600 underline">方案與定價</Link>）之退款事宜，
-            由 {COMPANY.legalName} 提供服務。
+            由 {COMPANY.legalName}（統一編號 {COMPANY.taxId}）提供服務。
           </p>
         </Section>
 

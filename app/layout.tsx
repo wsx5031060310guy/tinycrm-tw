@@ -39,8 +39,9 @@ export default function RootLayout({
               <Link href="/privacy" className="hover:underline">隱私權政策</Link>
               <Link href="/refund" className="hover:underline">退款政策</Link>
             </nav>
+            <p>{`營運主體：${COMPANY.name}｜統一編號 ${COMPANY.taxId}｜客服信箱 ${COMPANY.email}`}</p>
             <p>
-              © {new Date().getFullYear()} {COMPANY.name}｜統一編號：{COMPANY.taxId}｜{COMPANY.address}
+              © {new Date().getFullYear()} {COMPANY.name}｜{COMPANY.address}
             </p>
             <p>
               Email：
