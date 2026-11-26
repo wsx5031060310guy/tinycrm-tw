@@ -55,7 +55,7 @@ describe("newebpay callbacks", () => {
   before(() => {
     Object.assign(process.env, {
       NEWEBPAY_MERCHANT_ID: "TEST123", NEWEBPAY_HASH_KEY: HASH_KEY, NEWEBPAY_HASH_IV: HASH_IV,
-      NEWEBPAY_API_BASE: "", NEXT_PUBLIC_SITE_URL: "http://localhost",
+      NEWEBPAY_API_BASE: "", NEXT_PUBLIC_SITE_URL: "http://localhost", NEWEBPAY_CHECKOUT_ENABLED: "1",
     });
     for (const m of ["error", "warn"] as const) mock.method(console, m, () => {});
   });
