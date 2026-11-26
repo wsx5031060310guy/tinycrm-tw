@@ -95,6 +95,7 @@ export function readPaymentCallback(
   }
   return {
     // Issuing an ATM / convenience-store code also reports SUCCESS, without PayTime.
+    // (Cash-on-pickup, CVSCOM, also sends an empty PayTime; checkout does not offer it.)
     outcome: payload.Status !== "SUCCESS" ? "FAILED" : result.PayTime ? "PAID" : "PENDING",
     merchantOrderNo,
     amount: Number(result.Amt),

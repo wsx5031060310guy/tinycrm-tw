@@ -25,7 +25,10 @@ export async function POST(req: NextRequest) {
   const { outcome, merchantOrderNo, amount, tradeNo, payload } = callback;
 
   const order = findByMerchantTradeNo(merchantOrderNo);
-  if (!order) return new NextResponse("0");
+  if (!order) {
+    console.error("[newebpay/notify] order not found", { merchantOrderNo, outcome });
+    return new NextResponse("0");
+  }
   if (outcome === "PENDING") {
     console.warn("[newebpay/notify] SUCCESS without PayTime, not credited", { merchantOrderNo });
     return new NextResponse("0");
