@@ -11,6 +11,13 @@ function siteUrl(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  // Orders still live in process memory (order-store.ts), so a notify that lands on
+  // another instance, or after a redeploy, cannot find its order and the payment is
+  // lost. Keep checkout closed until orders are stored in Postgres.
+  if (process.env.NEWEBPAY_CHECKOUT_ENABLED !== "1") {
+    return NextResponse.json({ error: "checkout is temporarily unavailable" }, { status: 503 });
+  }
+
   const body = await req.json().catch(() => ({}));
   const planCode = String(body.plan ?? "basic");
   const plan = getPlan(planCode);
